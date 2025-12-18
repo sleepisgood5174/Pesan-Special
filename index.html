@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pesan Spesial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .card-box {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      z-index: 2;
+      position: relative;
+    }
+
+    .hidden { display: none; }
+
+    .heart {
+      font-size: 3rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    .love {
+      position: fixed;
+      top: -20px;
+      font-size: 20px;
+      animation: fall linear forwards;
+      z-index: 1;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); opacity: 0; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in { animation: fadeIn 1s ease forwards; }
+
+    .flash {
+      position: fixed;
+      inset: 0;
+      background: white;
+      opacity: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="flash" class="flash"></div>
+
+  <!-- COVER -->
+  <div id="cover" class="card-box">
+    <h2>💌</h2>
+    <p class="text-muted">Ada pesan kecil buat Safa</p>
+    <button class="btn btn-danger mt-3" onclick="openMessage()">
+      Buka Pesan
+    </button>
+  </div>
+
+  <!-- ISI -->
+  <div id="content" class="card-box hidden">
+    <p class="text-muted">Hai Safa ✨</p>
+
+    <h2 class="fw-bold">Naufal</h2>
+    <div class="heart my-3">❤️</div>
+    <h2 class="fw-bold">Safa</h2>
+
+    <div class="mt-4 fst-italic">
+      <p>
+        Pulang sore naik TransJakarta,<br>
+        Naufal lanjut naik kereta.<br>
+        Bukan cuma soal pulang bareng aja,<br>
+        Sebenarnya Naufal suka sama Safa 😄
+      </p>
+    </div>
+
+    <a
+      href="https://wa.me/6285717847048?text=Hehe%20pantunnya%20receh%20😄%20Tapi%20serius%2C%20aku%20suka%20sama%20kamu%20🙂"
+      target="_blank"
+      class="btn btn-outline-danger mt-4"
+    >
+      Senyum dong 😊
+    </a>
+  </div>
+
+  <!-- AUDIO PETIR (STABIL) -->
+  <audio id="thunderSound" preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2021/08/04/audio_7d6e8f6b38.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function createLove() {
+      const love = document.createElement("div");
+      love.className = "love";
+      love.innerText = Math.random() > 0.5 ? "❤️" : "💗";
+      love.style.left = Math.random() * 100 + "vw";
+      love.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(love);
+      setTimeout(() => love.remove(), 6000);
+    }
+
+    let loveInterval = setInterval(createLove, 800);
+
+    function flashPetir() {
+      const flash = document.getElementById("flash");
+      flash.style.opacity = "1";
+      setTimeout(() => flash.style.opacity = "0", 120);
+    }
+
+    function openMessage() {
+      document.getElementById("cover").classList.add("hidden");
+
+      const content = document.getElementById("content");
+      content.classList.remove("hidden");
+      content.classList.add("fade-in");
+
+      const audio = document.getElementById("thunderSound");
+      audio.muted = false;
+      audio.volume = 1;
+      audio.currentTime = 0;
+
+      audio.play().catch(err => {
+        console.log("Audio blocked:", err);
+        alert("Klik sekali lagi ya 😄 (browser minta izin suara)");
+      });
+
+      flashPetir();
+
+      clearInterval(loveInterval);
+      loveInterval = setInterval(createLove, 300);
+    }
+  </script>
+
+</body>
+</html>
