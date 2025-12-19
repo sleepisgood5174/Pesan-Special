@@ -45,36 +45,38 @@ body{
 
 .hidden{display:none}
 
-#cover{
-  perspective:800px;
+/* ENVELOPE */
+.envelope{
+  position:relative;
+  width:300px;
+  height:200px;
 }
 
 .flap{
   position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:50%;
+  top:0; left:0; width:100%; height:50%;
   background:#fff;
   border-top-left-radius:20px;
   border-top-right-radius:20px;
   transform-origin: top;
   transition: transform 0.8s ease;
-  box-shadow:0 5px 15px rgba(0,0,0,.2);
-  z-index:3;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  z-index:2;
 }
 
-#cover.open .flap{
-  transform: rotateX(-150deg);
+.envelope.open .flap{
+  transform: rotateX(-160deg);
 }
 
 .letter{
   opacity:0;
-  transition: opacity 0.6s ease 0.8s;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
 }
 
-#cover.open .letter{
+.envelope.open .letter{
   opacity:1;
+  transform: translateY(0);
 }
 
 .heart{
@@ -193,11 +195,13 @@ body{
 </div>
 
 <div id="cover" class="card-box">
-  <div class="flap"></div>
-  <div class="letter">
-    <h2>💌</h2>
-    <p class="text-muted">Ada pesan kecil buat Safa</p>
-    <button class="btn btn-danger mt-3" onclick="openMessage()">Buka Pesan</button>
+  <div class="envelope">
+    <div class="flap"></div>
+    <div class="letter">
+      <h2>💌</h2>
+      <p class="text-muted">Ada pesan kecil buat Safa</p>
+      <button class="btn btn-danger mt-3" onclick="openMessage()">Buka Pesan</button>
+    </div>
   </div>
 </div>
 
@@ -281,11 +285,11 @@ document.getElementById("mainLove").addEventListener("click",function(e){
 });
 
 function openMessage(){
-  const cover=document.getElementById("cover");
-  cover.classList.add("open");
+  const envelope=document.querySelector(".envelope");
+  envelope.classList.add("open");
 
   setTimeout(()=>{
-    cover.style.display="none";
+    document.getElementById("cover").style.display="none";
     const content=document.getElementById("content");
     content.classList.remove("hidden");
     content.classList.add("fade-in");
@@ -300,7 +304,7 @@ function openMessage(){
 
     const audio=document.getElementById("thunderSound");
     audio.play().catch(()=>{});
-  },800);
+  },900);
 }
 </script>
 
