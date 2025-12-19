@@ -54,6 +54,7 @@ body{
   100%{transform:scale(1)}
 }
 
+/* LOVE FALL */
 .love{
   position:fixed;
   top:-20px;
@@ -62,7 +63,6 @@ body{
   opacity:.8;
   z-index:1;
 }
-
 @keyframes fall{
   to{transform:translateY(110vh);opacity:0}
 }
@@ -76,41 +76,46 @@ body{
   pointer-events:none;
 }
 
-/* CUPID */
+/* ===== CUPID KIRI & KANAN ===== */
 .cupid{
   position:fixed;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:9999;
+  top:10px;
+  z-index:4;
   transform-origin:top center;
   animation:swing 3s ease-in-out infinite;
 }
 
+.cupid.left{ left:30px; }
+.cupid.right{ right:30px; }
+
 .rope{
   width:3px;
-  height:80px;
+  height:70px;
   background:rgba(255,255,255,.7);
   margin:auto;
   border-radius:10px;
 }
 
 .angel{
-  font-size:3.2rem;
+  font-size:3rem;
   filter:drop-shadow(0 5px 10px rgba(0,0,0,.3));
 }
 
 @keyframes swing{
-  0%{transform:translateX(-50%) rotate(-6deg)}
-  50%{transform:translateX(-50%) rotate(6deg)}
-  100%{transform:translateX(-50%) rotate(-6deg)}
+  0%{transform:rotate(-6deg)}
+  50%{transform:rotate(6deg)}
+  100%{transform:rotate(-6deg)}
 }
 
-.btn-danger,
-.btn-outline-danger{
-  border-radius:30px;
-  padding:10px 26px;
-  font-weight:600;
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:10px;
+  width:100%;
+  text-align:center;
+  font-size:0.85rem;
+  color:rgba(255,255,255,.85);
+  z-index:3;
 }
 </style>
 </head>
@@ -119,8 +124,14 @@ body{
 
 <div id="flash" class="flash"></div>
 
-<!-- CUPID -->
-<div class="cupid hidden" id="cupid">
+<!-- CUPID KIRI -->
+<div class="cupid left hidden" id="cupidLeft">
+  <div class="rope"></div>
+  <div class="angel">👼🏹</div>
+</div>
+
+<!-- CUPID KANAN -->
+<div class="cupid right hidden" id="cupidRight">
   <div class="rope"></div>
   <div class="angel">👼🏹</div>
 </div>
@@ -155,6 +166,11 @@ body{
   </a>
 </div>
 
+<!-- FOOTER -->
+<div class="footer">
+  Powered by <strong>Naufal Gozhi</strong>
+</div>
+
 <audio id="thunderSound">
   <source src="https://cdn.pixabay.com/audio/2021/08/04/audio_7d6e8f6b38.mp3">
 </audio>
@@ -183,9 +199,8 @@ function cupidLove(){
   h.innerText="💘";
   h.style.position="fixed";
   h.style.top="90px";
-  h.style.left="50%";
-  h.style.transform="translateX(-50%)";
-  h.style.fontSize="24px";
+  h.style.left=Math.random()>0.5?"40px":"calc(100% - 60px)";
+  h.style.fontSize="22px";
   h.style.animation="fall 3s linear forwards";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),3000);
@@ -194,12 +209,13 @@ function cupidLove(){
 function openMessage(){
   document.getElementById("cover").classList.add("hidden");
   document.getElementById("content").classList.remove("hidden");
-  document.getElementById("cupid").classList.remove("hidden");
+  document.getElementById("cupidLeft").classList.remove("hidden");
+  document.getElementById("cupidRight").classList.remove("hidden");
 
   flashPetir();
   clearInterval(loveInterval);
   loveInterval=setInterval(createLove,300);
-  setInterval(cupidLove,4000);
+  setInterval(cupidLove,3500);
 
   const audio=document.getElementById("thunderSound");
   audio.play().catch(()=>{});
