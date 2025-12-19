@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Pesan Spesial</title>
+<title>Pesan Spesial 💘</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +54,6 @@ body{
   100%{transform:scale(1)}
 }
 
-/* LOVE FALL */
 .love{
   position:fixed;
   top:-20px;
@@ -63,11 +62,11 @@ body{
   opacity:.8;
   z-index:1;
 }
+
 @keyframes fall{
   to{transform:translateY(110vh);opacity:0}
 }
 
-/* FLASH */
 .flash{
   position:fixed;
   inset:0;
@@ -77,13 +76,13 @@ body{
   pointer-events:none;
 }
 
-/* ===== CUPID ===== */
+/* CUPID */
 .cupid{
   position:fixed;
-  top:-10px;
+  top:0;
   left:50%;
   transform:translateX(-50%);
-  z-index:4;
+  z-index:9999;
   transform-origin:top center;
   animation:swing 3s ease-in-out infinite;
 }
@@ -105,6 +104,13 @@ body{
   0%{transform:translateX(-50%) rotate(-6deg)}
   50%{transform:translateX(-50%) rotate(6deg)}
   100%{transform:translateX(-50%) rotate(-6deg)}
+}
+
+.btn-danger,
+.btn-outline-danger{
+  border-radius:30px;
+  padding:10px 26px;
+  font-weight:600;
 }
 </style>
 </head>
@@ -142,7 +148,7 @@ body{
     </p>
   </div>
 
-  <a href="https://wa.me/6285717847048?text=Hehe%20pantunnya%20receh%20😄"
+  <a href="https://wa.me/6285717847048"
      target="_blank"
      class="btn btn-outline-danger mt-4">
      Senyum dong 😊
