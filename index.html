@@ -41,6 +41,13 @@ body{
   box-shadow:0 20px 50px rgba(0,0,0,.25);
   z-index:2;
   margin-top:20px;
+  transform-origin: top;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.card-box.open {
+  transform: rotateX(-90deg) scaleY(0);
+  opacity:0;
 }
 
 .hidden{display:none}
@@ -49,6 +56,7 @@ body{
   font-size:3.5rem;
   animation:pulse 1.4s infinite;
   text-shadow:0 0 15px rgba(255,0,80,.6);
+  cursor:pointer;
 }
 
 @keyframes pulse{
@@ -135,19 +143,12 @@ body{
   z-index:3;
 }
 
-/* KOMENTAR */
-#commentSection{
-  margin-top:30px;
-  text-align:left;
-}
-#commentSection h5{
-  margin-bottom:15px;
-}
-.comment-item{
-  background:rgba(255,255,255,.7);
-  padding:10px 15px;
-  border-radius:12px;
-  margin-bottom:10px;
+/* SPARKLE */
+.sparkle{
+  position:fixed;
+  font-size:14px;
+  animation:fall 1.2s linear forwards;
+  opacity:1;
 }
 </style>
 </head>
@@ -175,7 +176,7 @@ body{
 <div id="content" class="card-box hidden">
   <p class="text-muted">Hai Safa ✨</p>
   <h2 class="fw-bold">Naufal</h2>
-  <div class="heart my-3 fire-love">💖</div>
+  <div class="heart my-3 fire-love" id="mainLove">💖</div>
   <h2 class="fw-bold">Safa</h2>
 
   <div class="mt-4 fst-italic">
@@ -192,22 +193,6 @@ body{
      class="btn btn-outline-danger mt-4">
      Klik link ini untuk balas perasaan ku
   </a>
-
-  <!-- KOMENTAR -->
-  <div id="commentSection">
-    <h5>Ucapan / Komentar</h5>
-    <form id="commentForm">
-      <div class="mb-2">
-        <input type="text" class="form-control" id="nameInput" placeholder="Nama" required>
-      </div>
-      <div class="mb-2">
-        <textarea class="form-control" id="commentInput" rows="2" placeholder="Komen" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary btn-sm">Kirim</button>
-    </form>
-    <div id="commentsList" class="mt-3"></div>
-  </div>
-
 </div>
 
 <div class="footer">
@@ -221,7 +206,7 @@ body{
 <script>
 function createLove(){
   const love=document.createElement("div");
-  love.className="love fire-love"; // love berapi
+  love.className="love fire-love";
   love.innerText=Math.random()>0.5?"💖":"💘";
   love.style.left=Math.random()*100+"vw";
   love.style.fontSize=(20+Math.random()*24)+"px";
@@ -249,38 +234,46 @@ function cupidLove(){
   setTimeout(()=>h.remove(),3000);
 }
 
-function openMessage(){
-  document.getElementById("cover").classList.add("hidden");
-  document.getElementById("content").classList.remove("hidden");
-  document.getElementById("cupidLeft").classList.remove("hidden");
-  document.getElementById("cupidRight").classList.remove("hidden");
-
-  flashPetir();
-  clearInterval(loveInterval);
-  loveInterval=setInterval(createLove,300);
-  setInterval(cupidLove,3500);
-
-  const audio=document.getElementById("thunderSound");
-  audio.play().catch(()=>{});
+function sparkle(x,y){
+  for(let i=0;i<6;i++){
+    const sp=document.createElement("div");
+    sp.className="sparkle";
+    sp.innerText="✨";
+    sp.style.left=x+Math.random()*30-15+"px";
+    sp.style.top=y+Math.random()*30-15+"px";
+    sp.style.fontSize=(10+Math.random()*10)+"px";
+    document.body.appendChild(sp);
+    setTimeout(()=>sp.remove(),1000);
+  }
 }
 
-// ======= KOMENTAR =======
-const commentForm=document.getElementById("commentForm");
-const commentsList=document.getElementById("commentsList");
-
-commentForm.addEventListener("submit", function(e){
-  e.preventDefault();
-  const name=document.getElementById("nameInput").value.trim();
-  const comment=document.getElementById("commentInput").value.trim();
-  if(name && comment){
-    const div=document.createElement("div");
-    div.className="comment-item";
-    div.innerHTML=`<strong>${name}</strong>: ${comment}`;
-    commentsList.appendChild(div);
-    commentForm.reset();
-    div.scrollIntoView({behavior:"smooth"});
-  }
+document.getElementById("mainLove").addEventListener("click",function(e){
+  const rect=this.getBoundingClientRect();
+  sparkle(rect.left+20,rect.top+20);
 });
+
+function openMessage(){
+  const cover = document.getElementById("cover");
+  cover.classList.add("open");
+
+  setTimeout(()=>{
+    cover.style.display="none";
+    const content=document.getElementById("content");
+    content.classList.remove("hidden");
+    content.classList.add("fade-in");
+
+    document.getElementById("cupidLeft").classList.remove("hidden");
+    document.getElementById("cupidRight").classList.remove("hidden");
+
+    flashPetir();
+    clearInterval(loveInterval);
+    loveInterval=setInterval(createLove,300);
+    setInterval(cupidLove,3500);
+
+    const audio=document.getElementById("thunderSound");
+    audio.play().catch(()=>{});
+  },800);
+}
 </script>
 
 </body>
