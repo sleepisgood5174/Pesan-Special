@@ -5,85 +5,35 @@
 <title>Pesan Spesial 💌</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
 body{
   margin:0;
   min-height:100vh;
-  font-family:'Poppins',sans-serif;
-  background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a6c1ee);
-  background-size:400% 400%;
-  animation:gradientMove 12s ease infinite;
+  font-family:'Segoe UI',sans-serif;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
   display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
   align-items:center;
-  overflow-x:hidden;
-  padding-bottom:120px;
-}
-
-@keyframes gradientMove{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
+  justify-content:center;
+  overflow:hidden;
+  flex-direction:column;
 }
 
 .card-box{
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(12px);
-  border-radius:28px;
+  background:white;
+  border-radius:24px;
   padding:40px;
-  max-width:520px;
+  max-width:500px;
   width:90%;
   text-align:center;
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
-  z-index:2;
-  margin-top:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
   position:relative;
 }
 
 .hidden{display:none}
 
-/* ENVELOPE */
-.envelope{
-  position:relative;
-  width:300px;
-  height:200px;
-}
-
-.flap{
-  position:absolute;
-  top:0; left:0; width:100%; height:50%;
-  background:#fff;
-  border-top-left-radius:20px;
-  border-top-right-radius:20px;
-  transform-origin: top;
-  transition: transform 0.8s ease;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  z-index:2;
-}
-
-.envelope.open .flap{
-  transform: rotateX(-160deg);
-}
-
-.letter{
-  opacity:0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease 0.8s, transform 0.6s ease 0.8s;
-}
-
-.envelope.open .letter{
-  opacity:1;
-  transform: translateY(0);
-}
-
 .heart{
-  font-size:3.5rem;
-  animation:pulse 1.4s infinite;
-  text-shadow:0 0 15px rgba(255,0,80,.6);
-  cursor:pointer;
+  font-size:3rem;
+  animation:pulse 1.5s infinite;
 }
 
 @keyframes pulse{
@@ -97,61 +47,23 @@ body{
   top:-20px;
   font-size:20px;
   animation:fall linear forwards;
-  opacity:.8;
+  opacity:0.8;
   z-index:1;
-}
-
-.fire-love{
-  text-shadow:
-    0 0 5px #ff77aa,
-    0 0 10px #ff3388,
-    0 0 15px #ff0055,
-    0 0 20px #ff0011;
-  animation: firePulse 1.2s infinite alternate;
-}
-
-@keyframes firePulse{
-  0%{ transform: scale(1) rotate(-10deg); opacity:0.8; }
-  50%{ transform: scale(1.2) rotate(10deg); opacity:1; }
-  100%{ transform: scale(1) rotate(-10deg); opacity:0.8; }
 }
 
 @keyframes fall{
   to{transform:translateY(110vh);opacity:0}
 }
 
-.flash{
-  position:fixed;
-  inset:0;
-  background:white;
-  opacity:0;
-  z-index:5;
-  pointer-events:none;
-}
-
-/* CUPID */
 .cupid{
   position:fixed;
   top:10px;
-  z-index:4;
-  transform-origin:top center;
+  z-index:2;
+  font-size:3rem;
   animation:swing 3s ease-in-out infinite;
 }
-.cupid.left{ left:30px; }
-.cupid.right{ right:30px; }
-
-.rope{
-  width:3px;
-  height:70px;
-  background:rgba(255,255,255,.7);
-  margin:auto;
-  border-radius:10px;
-}
-
-.angel{
-  font-size:3rem;
-  filter:drop-shadow(0 5px 10px rgba(0,0,0,.3));
-}
+.cupid.left{left:30px;}
+.cupid.right{right:30px;}
 
 @keyframes swing{
   0%{transform:rotate(-6deg)}
@@ -159,56 +71,33 @@ body{
   100%{transform:rotate(-6deg)}
 }
 
-/* FOOTER */
 .footer{
   position:fixed;
   bottom:10px;
   width:100%;
   text-align:center;
   font-size:0.85rem;
-  color:rgba(255,255,255,.85);
-  z-index:3;
-}
-
-/* SPARKLE */
-.sparkle{
-  position:fixed;
-  font-size:14px;
-  animation:fall 1.2s linear forwards;
-  opacity:1;
+  color:rgba(0,0,0,0.6);
 }
 </style>
 </head>
-
 <body>
 
-<div id="flash" class="flash"></div>
+<div class="cupid left hidden" id="cupidLeft">👼🏹</div>
+<div class="cupid right hidden" id="cupidRight">👼🏹</div>
 
-<div class="cupid left hidden" id="cupidLeft">
-  <div class="rope"></div>
-  <div class="angel">👼🏹</div>
-</div>
-
-<div class="cupid right hidden" id="cupidRight">
-  <div class="rope"></div>
-  <div class="angel">👼🏹</div>
-</div>
-
+<!-- COVER -->
 <div id="cover" class="card-box">
-  <div class="envelope">
-    <div class="flap"></div>
-    <div class="letter">
-      <h2>💌</h2>
-      <p class="text-muted">Ada pesan kecil buat Safa</p>
-      <button class="btn btn-danger mt-3" onclick="openMessage()">Buka Pesan</button>
-    </div>
-  </div>
+  <h2>💌</h2>
+  <p class="text-muted">Ada pesan kecil buat Safa</p>
+  <button class="btn btn-danger mt-3" onclick="openMessage()">Buka Pesan</button>
 </div>
 
+<!-- ISI -->
 <div id="content" class="card-box hidden">
   <p class="text-muted">Hai Safa ✨</p>
   <h2 class="fw-bold">Naufal</h2>
-  <div class="heart my-3 fire-love" id="mainLove">💖</div>
+  <div class="heart my-3">❤️</div>
   <h2 class="fw-bold">Safa</h2>
 
   <div class="mt-4 fst-italic">
@@ -231,80 +120,29 @@ body{
   Powered by <strong>Naufal Gozhi</strong>
 </div>
 
-<audio id="thunderSound">
-  <source src="https://cdn.pixabay.com/audio/2021/08/04/audio_7d6e8f6b38.mp3">
-</audio>
-
 <script>
 function createLove(){
   const love=document.createElement("div");
-  love.className="love fire-love";
-  love.innerText=Math.random()>0.5?"💖":"💘";
+  love.className="love";
+  love.innerText="💖";
   love.style.left=Math.random()*100+"vw";
-  love.style.fontSize=(20+Math.random()*24)+"px";
   love.style.animationDuration=(3+Math.random()*3)+"s";
   document.body.appendChild(love);
   setTimeout(()=>love.remove(),6000);
 }
+
 let loveInterval=setInterval(createLove,800);
 
-function flashPetir(){
-  const f=document.getElementById("flash");
-  f.style.opacity="1";
-  setTimeout(()=>f.style.opacity="0",120);
-}
-
-function cupidLove(){
-  const h=document.createElement("div");
-  h.innerText="💘";
-  h.style.position="fixed";
-  h.style.top="90px";
-  h.style.left=Math.random()>0.5?"40px":"calc(100% - 60px)";
-  h.style.fontSize="22px";
-  h.style.animation="fall 3s linear forwards";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),3000);
-}
-
-function sparkle(x,y){
-  for(let i=0;i<6;i++){
-    const sp=document.createElement("div");
-    sp.className="sparkle";
-    sp.innerText="✨";
-    sp.style.left=x+Math.random()*30-15+"px";
-    sp.style.top=y+Math.random()*30-15+"px";
-    sp.style.fontSize=(10+Math.random()*10)+"px";
-    document.body.appendChild(sp);
-    setTimeout(()=>sp.remove(),1000);
-  }
-}
-
-document.getElementById("mainLove").addEventListener("click",function(e){
-  const rect=this.getBoundingClientRect();
-  sparkle(rect.left+20,rect.top+20);
-});
-
 function openMessage(){
-  const envelope=document.querySelector(".envelope");
-  envelope.classList.add("open");
+  document.getElementById("cover").classList.add("hidden");
+  const content=document.getElementById("content");
+  content.classList.remove("hidden");
 
-  setTimeout(()=>{
-    document.getElementById("cover").style.display="none";
-    const content=document.getElementById("content");
-    content.classList.remove("hidden");
-    content.classList.add("fade-in");
+  document.getElementById("cupidLeft").classList.remove("hidden");
+  document.getElementById("cupidRight").classList.remove("hidden");
 
-    document.getElementById("cupidLeft").classList.remove("hidden");
-    document.getElementById("cupidRight").classList.remove("hidden");
-
-    flashPetir();
-    clearInterval(loveInterval);
-    loveInterval=setInterval(createLove,300);
-    setInterval(cupidLove,3500);
-
-    const audio=document.getElementById("thunderSound");
-    audio.play().catch(()=>{});
-  },900);
+  clearInterval(loveInterval);
+  loveInterval=setInterval(createLove,300);
 }
 </script>
 
